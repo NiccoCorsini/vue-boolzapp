@@ -1,0 +1,259 @@
+/* GENERAL */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+}
+
+img.avatar{
+    width: 60px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+ul li{
+    list-style: none;
+}
+
+h2{
+    font-weight: 400;
+}
+
+/* VUE APP */
+#app{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(
+        to bottom, 
+        #128C7E 0%,
+        #128C7E 15%,
+        #ECE5DD 15%,
+        #ECE5DD 100%);
+}
+
+/* APP WINDOW */
+#app .container{
+    width: 80%;
+    height: 94%;
+    display: flex;
+}
+
+#app .container > .left{
+    min-width: 33%;
+    background-color: #fff;
+}
+
+#app .container > .right{
+    flex-grow: 1;
+    background-image: url(../img/mine.jpg);
+    padding-left: 2px;
+}
+
+/* ALL SECTION HEADERS */
+#app .container > .left header,
+#app .container > .right header{
+    background-color: #ededed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 70px;
+    padding: 0 1rem;
+}
+
+#app .container > .left header i,
+#app .container > .right header i{
+    color: #bababa;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+#app .container > .left header i:not(:last-child),
+#app .container > .right header i:not(:last-child){
+    margin-right: calc(1rem - 4px);
+}
+
+/* LEFT HEADER */
+#app .container > .left header .user{
+    display: flex;
+    align-items: center;
+}
+
+/* NOTIFICATIONS */
+#app .container > .left .notification{
+    background-color: #a1dffe;
+    display: flex;
+    align-items: center;
+    padding: 1.2rem;
+}
+
+#app .container > .left .notification .avatar-container i{
+    color: #a1dffe;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#app .container > .left .notification .on-notice a{
+    color: #678da1;
+    font-size: 0.8rem;
+}
+
+/* SEARCHBAR */
+#app .container > .left .searchbar{
+    background-color: #fbfbfb;
+    padding: 0.4rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+#app .container > .left .searchbar i{
+    color: #bababa;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: calc(1.5rem - 4px);
+    cursor: pointer;
+    z-index: 1;
+    padding: 0 4px;
+}
+
+#app .container > .left .searchbar input,
+#app .container > .right .sendbar input{
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 30px;
+    padding-left: 3rem;
+    box-shadow: 0 1px 3px 0 #bababa7a;
+}
+
+#app .container > .left .searchbar input::placeholder{
+    font-size: 0.6rem;
+    position: relative;
+    bottom: 3px;
+    color: #e5e5e7;
+    letter-spacing: 1px;
+}
+
+/* CONTACTS */
+#app .container > .left .contacts ul li{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+#app .container > .left .contacts ul li:not(:last-child){
+    border-bottom: 1px solid #ededed;
+}
+
+/* RIGHT SECTION */
+#app .container > .right{
+    display: flex;
+    flex-direction: column;
+}
+
+/* RIGHT HEADER */
+#app .container > .right header .left{
+    display: flex;
+    align-items: center;   
+}
+
+#app .container > .right header .left .info span{
+    color: #898e91;
+    margin-top: 5px;
+    font-size: 0.8rem;
+}
+
+/* CHAT */
+#app .container > .right .chat-messages{
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 3rem 5rem;
+}
+
+#app .container > .right .chat-messages .sent,
+#app .container > .right .chat-messages .received{
+    padding: 0.2rem 0;
+}
+
+#app .container > .right .chat-messages ul{
+    width: 100%;
+}
+
+#app .container > .right .chat-messages ul li{
+    padding: 1rem 2rem 1.5rem;
+    min-width: 43%;
+    max-width: 43%;
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 1px 3px 0 #bababa7a;
+}
+
+#app .container > .right .chat-messages ul li .text{
+    font-weight: 500;
+}
+
+#app .container > .right .chat-messages ul li .time{
+    position: absolute;
+    bottom: 3px;
+    right: 10px;
+    color: #d2d4d5;
+    font-size: 0.7rem;
+}
+
+#app .container > .right .chat-messages .sent ul li{
+    background-color: #ddfabe;
+}
+
+#app .container > .right .chat-messages .received ul li{
+    background-color: #fff;
+}
+
+#app .container > .right .chat-messages .sent ul{
+    display: flex;
+    justify-content: flex-end;
+}
+
+#app .container > .right .chat-messages .received ul{
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* SENDBAR */
+#app .container > .right .sendbar{
+    min-height: 60px;
+    background-color: #f4f0ed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.8rem;
+}
+
+#app .container > .right .sendbar i{
+    color: #777e81;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#app .container > .right .sendbar input{
+    height: 45px;
+    width: calc(100% - 6rem);
+    padding-left: 0.9rem;
+}
+
+#app .container > .right .sendbar input::placeholder{
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: #c4c4c4;
+    position: relative;
+    bottom: 2px;
+}

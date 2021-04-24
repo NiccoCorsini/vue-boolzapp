@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoolzApp</title>
+
+    <!-- FONT -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <!-- ICONS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css' integrity='sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==' crossorigin='anonymous'/>
+
+    <!-- STYLE -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- VUEJS -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.common.dev.min.js' integrity='sha512-PkyFg1MEb/EwsFAqzqvZqWdMT4ItV+E1NgOtfBC9X8UecJcO9bwirD+v/9tJwci4wTNHdNYBk4ev6ceb1hy73g==' crossorigin='anonymous'></script>
+</head>
+<body>
+    <!-- VUE APP -->
+    <div id="app">
+
+        <!-- APP WINDOW -->
+        <div class="container">
+
+            <!-- LEFT (ASIDE) -->
+            <div class="left">
+
+                <!-- HEADER -->
+                <header>
+
+                    <div class="user">
+                        <img class="avatar" src="./img/avatar_io.jpg" alt="User">
+                        <h3>Nome Utente</h3>
+                    </div>
+
+                    <div class="functions">
+                        <i class="fas fa-circle-notch"></i>
+                        <i class="fas fa-comment-alt"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+
+                </header>
+
+                <!-- NOTIFICATIONS -->
+                <div class="notification">
+
+                    <div class="avatar-container">
+                        <i class="fas fa-bell-slash"></i>
+                    </div>
+
+                    <div class="on-notice">
+                        <h3>Ricevi notifiche di nuovi messaggi</h3>
+                        <a href="#">Attiva notifiche desktop</a>
+                    </div>
+
+                </div>
+
+                <!-- SEARCHBAR -->
+                <div class="searchbar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" name="" id="" placeholder="Cerca o inizia una nuova chat">
+                </div>
+
+                <!-- CONTACTS -->
+                <div class="contacts">
+
+                    <ul>
+                        <li v-for="(contact, index) in contacts">
+                            <img class="avatar" :src="`./img/avatar${contact.avatar}.jpg`" alt="">
+                            <h3>{{contact.name}}</h3>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+            
+            <!-- RIGHT SECTION -->
+            <div class="right">
+
+                <!-- HEADER -->
+                <header>
+
+                    <div class="left">
+                        <img class="avatar" src="./img/avatar_1.jpg" alt="">
+                        <div class="info">
+                            <h3>Michele</h3>
+                            <span>Ultimo accesso oggi alle 10.35</span>
+                        </div>
+                    </div>
+
+                    <div class="right">
+                        <i class="fas fa-search"></i>
+                        <i class="fas fa-paperclip"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+
+                </header>
+
+                <!-- CHAT MESSAGES -->
+                <div class="chat-messages">
+                    <div class="sent">
+                        <ul>
+                            <li>
+                                <div class="text">
+                                    Messaggio inviato
+                                </div>
+                                <div class="time">
+                                    10/01/2021 15:50:00
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="received">
+                        <ul>
+                            <li>
+                                <div class="text">
+                                    Messaggio ricevuto
+                                </div>
+                                <div class="time">
+                                    10/01/2021 15:50:00
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+    
+                </div>
+                
+                <!-- SENDBAR -->
+                <div class="sendbar">
+                    <i class="far fa-smile"></i>
+                    <input type="text" name="" id="" placeholder="Scrivi un messaggio">
+                    <i class="fas fa-microphone"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src='./js/main.js'></script>
+</body>
+</html>
