@@ -363,7 +363,6 @@ const app = new Vue({
                 code: "😎"
             },
         ],
-        
         // SELECTED (CURRENT OBJECT)
         current: {},
 
@@ -394,8 +393,6 @@ const app = new Vue({
         // DARKMODE SWITCH
         darkmode: false,
     },
-    
-
     methods: {
         // DARKMODE
         darkmodeSwitch(){
