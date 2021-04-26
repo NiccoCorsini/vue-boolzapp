@@ -5,6 +5,7 @@
     box-sizing: border-box;
     font-family: 'Lato', sans-serif;
     font-size: 16px;
+    color: #545454;
 }
 
 img.avatar{
@@ -40,11 +41,17 @@ h2{
     width: 80%;
     height: 94%;
     display: flex;
+    box-shadow: 0 2px 15px 0 #3f3f3f3a;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 #app .container > .left{
     min-width: 33%;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 #app .container > .right{
@@ -108,10 +115,9 @@ h2{
 
 /* SEARCHBAR */
 #app .container > .left .searchbar{
-    background-color: #fbfbfb;
-    padding: 0.4rem;
+    background-color: #f1f0f0;
+    padding: 0.6rem 0.8rem;
     position: relative;
-    margin-bottom: 0.5rem;
 }
 
 #app .container > .left .searchbar i{
@@ -123,6 +129,10 @@ h2{
     cursor: pointer;
     z-index: 1;
     padding: 0 4px;
+}
+
+#app .container > .left .searchbar input{
+    border-radius: 20px;
 }
 
 #app .container > .left .searchbar input,
@@ -139,17 +149,65 @@ h2{
     font-size: 0.6rem;
     position: relative;
     bottom: 3px;
-    color: #e5e5e7;
+    color: #bdbdbd;
     letter-spacing: 1px;
 }
 
 /* CONTACTS */
+#app .container > .left .contacts{
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* CONTACTS SCROLLBAR */
+#app .container > .left .contacts {
+    scrollbar-width: thin;
+    scrollbar-color: #6d6d6d62 transparent;
+}
+
+#app .container > .left .contacts::-webkit-scrollbar {
+    width: 5px;
+}
+  
+#app .container > .left .contacts::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+#app .container > .left .contacts::-webkit-scrollbar-thumb {
+    background-color: #6d6d6d62;
+    border: none;
+}
+
+#app .container > .left .contacts h2{
+    padding-left: 1rem;
+}
+
 #app .container > .left .contacts ul li{
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
     cursor: pointer;
+    transition: background-color 250ms;
 }
+
+#app .container > .left .contacts ul li.active{
+    background-color: #f1f0f0da;
+    animation: appear 250ms ease forwards;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#app .container > .left .contacts ul li:hover{
+    background-color: #f1f0f0be;
+}
+
 
 #app .container > .left .contacts ul li:not(:last-child){
     border-bottom: 1px solid #ededed;
@@ -159,6 +217,7 @@ h2{
 #app .container > .right{
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 /* RIGHT HEADER */
@@ -177,7 +236,26 @@ h2{
 #app .container > .right .chat-messages{
     flex-grow: 1;
     overflow-y: auto;
-    padding: 3rem 5rem;
+    padding: 3rem 5rem 6rem;
+    scroll-behavior: smooth;
+}
+
+#app .container > .right .chat-messages {
+    scrollbar-width: thin;
+    scrollbar-color: #6d6d6d62 transparent;
+}
+
+#app .container > .right .chat-messages::-webkit-scrollbar {
+    width: 5px;
+}
+  
+#app .container > .right .chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+#app .container > .right .chat-messages::-webkit-scrollbar-thumb {
+    background-color: #6d6d6d62;
+    border: none;
 }
 
 #app .container > .right .chat-messages .sent,
@@ -190,16 +268,15 @@ h2{
 }
 
 #app .container > .right .chat-messages ul li{
-    padding: 1rem 2rem 1.5rem;
-    min-width: 43%;
-    max-width: 43%;
-    border-radius: 15px;
-    position: relative;
-    box-shadow: 0 1px 3px 0 #bababa7a;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding-bottom: 1.5rem;
 }
 
 #app .container > .right .chat-messages ul li .text{
     font-weight: 500;
+    word-wrap: break-word;
 }
 
 #app .container > .right .chat-messages ul li .time{
@@ -210,22 +287,81 @@ h2{
     font-size: 0.7rem;
 }
 
-#app .container > .right .chat-messages .sent ul li{
+#app .container > .right .chat-messages ul li .message{
+    background-color: #fff;
+    padding: 1rem 2rem 1.5rem;
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 1px 3px 0 #bababa7a;
+    min-width: 43%;
+    max-width: 43%;
+}
+
+#app .container > .right .chat-messages ul li .message.color{
     background-color: #ddfabe;
 }
 
-#app .container > .right .chat-messages .received ul li{
-    background-color: #fff;
-}
-
-#app .container > .right .chat-messages .sent ul{
+#app .container > .right .chat-messages ul li.rightMessage{
     display: flex;
     justify-content: flex-end;
 }
 
-#app .container > .right .chat-messages .received ul{
+/* EMOTICONS */
+#app .container > .right .emoticons{
+    position: absolute;
+    background-color: #f4f0ed;
+    bottom: 0;
+    width: 100%;
+    max-height: 0px;
+    position: relative;
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+    transition: all 300ms;
+}
+
+#app .container > .right .emoticons.active{
+    max-height: 190px;
+}
+
+#app .container > .right .emoticons .emo-header{
+    padding: 1rem 2rem 0.8rem;
+}
+
+#app .container > .right .emoticons .emo-container{
+    overflow-y: auto;
+    display: flex;
+    padding: 0 2rem;
+}
+
+/* EMOTICONS CONTAINER SCROLLBAR */
+#app .container > .right .emoticons .emo-container {
+    scrollbar-width: thin;
+    scrollbar-color: #6d6d6d62 transparent;
+}
+
+#app .container > .right .emoticons .emo-container::-webkit-scrollbar {
+    width: 5px;
+}
+  
+#app .container > .right .emoticons .emo-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+#app .container > .right .emoticons .emo-container::-webkit-scrollbar-thumb {
+    background-color: #6d6d6d62;
+    border: none;
+}
+
+#app .container > .right .emoticons .emo-container ul{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#app .container > .right .emoticons ul li{
+    padding: 0rem 0.5rem 1rem;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 /* SENDBAR */
@@ -233,9 +369,13 @@ h2{
     min-height: 60px;
     background-color: #f4f0ed;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0 1.8rem;
+    padding: 0 1.8rem 0;
+    position: relative;
+}
+
+#app .container > .right .sendbar.active{
+    padding-right: 3.6rem;
 }
 
 #app .container > .right .sendbar i{
@@ -244,10 +384,23 @@ h2{
     cursor: pointer;
 }
 
+#app .container > .right .sendbar i.close{
+    margin-right: 1rem;
+}
+
+#app .container > .right .sendbar .action-send{
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 #app .container > .right .sendbar input{
     height: 45px;
     width: calc(100% - 6rem);
     padding-left: 0.9rem;
+    margin-left: 1.8rem;
+    border-radius: 30px;
 }
 
 #app .container > .right .sendbar input::placeholder{
@@ -256,4 +409,252 @@ h2{
     color: #c4c4c4;
     position: relative;
     bottom: 2px;
+}
+
+#app .container > .right .access{
+    position: absolute;
+    height: 100%;
+    background-color: #f8f9fc;
+    width: 100%;
+    z-index: 3;
+    color: #545454;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+}
+
+/* AFTER LOGIN SCREEN */
+#app .container > .right .access .img{
+    width: 230px;
+    height: 230px;
+    margin-bottom: 2rem;
+    background-image: url(../img/connect-phone.png);
+    background-size: cover;
+}
+
+#app .container > .right .access h2{
+    font-weight: 500;
+    font-size: 30px;
+    margin-bottom: 1rem;
+}
+
+#app .container > .right .access .text{
+    padding: 0 4rem;
+    color: #8d8d8e;
+    font-size: 14px;
+}
+
+#app .container > .right .access::after{
+    content: '';
+    height: 5px;
+    width: 100%;
+    background-color: #70e184;
+    position: absolute;
+    bottom: 0;
+}
+
+/* DARKMODE ACTIVATION */
+.dark-button{
+    cursor: pointer;
+    position: absolute;
+    left: 2rem;
+    bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #128C7E;
+    box-shadow: 0 2px 8px 0 #2424247a;
+}
+
+.dark-button i{
+    color: #e6e6e6;
+    font-size: 24px;
+}
+
+/**** DARKMODE ****/
+#app.dark{
+    background-image: linear-gradient(
+        to bottom, 
+        #115f60 0%,
+        #115f60 15%,
+        #333a3b 15%,
+        #333a3b 100%);
+    animation: appear 500ms ease forwards;
+}
+
+#app .container.dark{
+    box-shadow: 0 2px 15px 0 #2424247a;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right.dark{
+    background-image: url(../img/mine-dark.jpg);
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left header.dark,
+#app .container > .right header.dark{
+    background-color: #2a3032;
+    color: #e1e2e3;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left header h3.dark,
+#app .container > .right header h3.dark{
+    color: #e1e2e3;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .notification.dark{
+    background-color: #2e393e;
+    color: #b0b4b6;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .notification.dark .avatar-container i{
+    background-color: #394c56;
+    color: #7bb5af;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .notification.dark .on-notice h3{
+    color: #b0b4b6;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .notification.dark .on-notice a{
+    color: #7bb5af;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .searchbar.dark,
+#app .container > .left .contacts.dark{
+    background-color: #141d21;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .searchbar.dark{
+    border-bottom: 1px solid #2d3234;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .searchbar.dark input{
+    background-color: #323839;
+    box-shadow: 0 1px 3px 0 #1d1d1d3d;
+    color: #e0e1e2;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .searchbar.dark input::placeholder{
+    color: #7e8182;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .contacts.dark ul li:not(:last-child){
+    border-bottom: 1px solid #2d3234;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .contacts.dark ul li:hover{
+    background-color: #2d3234;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .contacts.dark ul li h3{
+    color: #e0e1e2;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .left .contacts.dark ul li.active{
+    background-color: #323839;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .chat-messages ul li .message.dark{
+    background-color: #272e31;
+    box-shadow: 0 1px 3px 0 #1d1d1d3d;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .chat-messages ul li .message.dark .text{
+    color: #cedcdd;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .chat-messages ul li .message.dark .time{
+    color: #9a9da0;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .chat-messages ul li .message.color.dark{
+    background-color: #116162;
+    box-shadow: 0 1px 3px 0 #1d1d1d3d;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .emoticons.dark{
+    background-color: #1e2528;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .emoticons.dark .emo-header h3{
+    color: #74787a;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .sendbar.dark{
+    background-color: #1e2528;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .sendbar.dark input{
+    background-color: #33393b;
+    color: #e0e1e2;
+    box-shadow: 0 1px 3px 0 #1d1d1d3d;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .sendbar.dark input::placeholder{
+    color: #74787a;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .access.dark{
+    background-color: #272e31;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .access.dark h2{
+    color: #d9d9db;
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .access.dark .img{
+    background-image: url(../img/connect-dark-phone.png);
+    animation: appear 500ms ease forwards;
+}
+
+#app .container > .right .access.dark::after{
+    background-color: #115f60;
+    animation: appear 500ms ease forwards;
+}
+
+.dark-button.dark{
+    background-color: #115f60;
+    animation: appear 500ms ease forwards;
+}
+
+@keyframes appear{
+    from {
+        opacity: 0.4;
+    }
+    to {
+        opacity: 1;
+    }
 }

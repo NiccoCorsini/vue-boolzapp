@@ -18,23 +18,31 @@
 
     <!-- VUEJS -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.common.dev.min.js' integrity='sha512-PkyFg1MEb/EwsFAqzqvZqWdMT4ItV+E1NgOtfBC9X8UecJcO9bwirD+v/9tJwci4wTNHdNYBk4ev6ceb1hy73g==' crossorigin='anonymous'></script>
+
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./img/favicon/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 </head>
 <body>
     <!-- VUE APP -->
-    <div id="app">
+    <div id="app" :class="{dark: darkmode}">
 
         <!-- APP WINDOW -->
-        <div class="container">
+        <div class="container" :class="{dark: darkmode}">
 
             <!-- LEFT (ASIDE) -->
             <div class="left">
 
                 <!-- HEADER -->
-                <header>
+                <header :class="{dark: darkmode}">
 
                     <div class="user">
-                        <img class="avatar" src="./img/avatar_io.jpg" alt="User">
-                        <h3>Nome Utente</h3>
+                        <img class="avatar" :src="'./img/avatar' + login.avatar + '.jpg'" :alt="login.name">
+                        <h3 :class="{dark: darkmode}">{{login.name}}</h3>
                     </div>
 
                     <div class="functions">
@@ -46,7 +54,7 @@
                 </header>
 
                 <!-- NOTIFICATIONS -->
-                <div class="notification">
+                <div class="notification" :class="{dark: darkmode}">
 
                     <div class="avatar-container">
                         <i class="fas fa-bell-slash"></i>
@@ -60,36 +68,47 @@
                 </div>
 
                 <!-- SEARCHBAR -->
-                <div class="searchbar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" name="" id="" placeholder="Cerca o inizia una nuova chat">
+                <div class="searchbar" :class="{dark: darkmode}">
+                    <i class="fas fa-search" @click="searchedUser"></i>
+                    <input name="" placeholder="Cerca o inizia una nuova chat" v-model.trim="searchUser" @keyup="searchedUser">
                 </div>
 
                 <!-- CONTACTS -->
-                <div class="contacts">
+                <div class="contacts" :class="{dark: darkmode}">
 
-                    <ul>
-                        <li v-for="(contact, index) in contacts">
+                    <ul v-if="notFound">
+                        <li @click="currentSelected(contact)" v-for="(contact, index) in contacts" :key="index + '-' + contact.avatar" v-if="contact.visible" :class="{active: contact.name == current.name}">
                             <img class="avatar" :src="`./img/avatar${contact.avatar}.jpg`" alt="">
                             <h3>{{contact.name}}</h3>
                         </li>
                     </ul>
+                    <h2 v-else>
+                        Non hai nessun {{tempName}} tra i contatti.
+                    </h2>
 
                 </div>
 
             </div>
             
             <!-- RIGHT SECTION -->
-            <div class="right">
+            <div class="right" :class="{dark: darkmode}">
+
+                <div v-if="!ifSelected" class="access" :class="{dark: darkmode}">
+                    <div class="img"></div>
+                    <h2>Mantieni il telefono connesso</h2>
+                    <div class="text">
+                        WhatsApp si collega al tuo telefono per sincronizzare i messaggi. Per ridurre l'utilizzo dei dati, collega il telefono al Wi-Fi.
+                    </div>
+                </div>
 
                 <!-- HEADER -->
-                <header>
+                <header :class="{dark: darkmode}" v-else>
 
                     <div class="left">
-                        <img class="avatar" src="./img/avatar_1.jpg" alt="">
+                        <img class="avatar" :src="'./img/avatar' + current.avatar + '.jpg'" alt="">
                         <div class="info">
-                            <h3>Michele</h3>
-                            <span>Ultimo accesso oggi alle 10.35</span>
+                            <h3 :class="{dark: darkmode}">{{current.name}}</h3>
+                            <span>Ultimo accesso il {{lastAccess}}</span>
                         </div>
                     </div>
 
@@ -102,43 +121,54 @@
                 </header>
 
                 <!-- CHAT MESSAGES -->
-                <div class="chat-messages">
-                    <div class="sent">
-                        <ul>
-                            <li>
+                <div id="chat-messages" class="chat-messages" v-show="ifSelected" @click="iconOff(); emoticonOff();">
+                    
+                    <ul>
+                        <li v-for="(message, index) in current.messages" :key="index + '-' + message.message"class="message" v-bind:class="{rightMessage: message.status == 'sent'}">
+                            <div class="message" v-bind:class="{color: message.status == 'sent', dark: darkmode}">
                                 <div class="text">
-                                    Messaggio inviato
+                                    {{message.message}}
                                 </div>
                                 <div class="time">
-                                    10/01/2021 15:50:00
+                                    {{message.date}}
                                 </div>
-                            </li>
-                        </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                </div>
+
+                <!-- EMOTICONS -->
+                <div :class="{active: emoticonVisible, dark: darkmode}" class="emoticons">
+                    <div class="emo-header">
+                        <h3>Emoji</h3>
                     </div>
-                    <div class="received">
+                    <div class="emo-container">
                         <ul>
-                            <li>
-                                <div class="text">
-                                    Messaggio ricevuto
-                                </div>
-                                <div class="time">
-                                    10/01/2021 15:50:00
-                                </div>
-                            </li>
+                            <li @click="emojiInsert(emoji)" v-for="(emoji, index) in emoticons" :key="index + '-' + emoji.code">{{emoji.code}}</li>
                         </ul>
                     </div>
-    
                 </div>
                 
                 <!-- SENDBAR -->
-                <div class="sendbar">
-                    <i class="far fa-smile"></i>
-                    <input type="text" name="" id="" placeholder="Scrivi un messaggio">
-                    <i class="fas fa-microphone"></i>
+                <div :class="{dark: darkmode, active: emoticonVisible}" class="sendbar" v-show="ifSelected">
+                    <i @click="emoticonOff()" v-show="emoticonVisible" class="close fas fa-times"></i>
+                    <i @click="emoticonOn()" class="far fa-smile"></i>
+                    <input name="" placeholder="Scrivi un messaggio" v-model.trim="newTextMessage" @keyup.enter="sendMessage" @click="iconOn">
+                    <div class="action-send">
+                        <i class="fas fa-microphone" v-if="!iconVisible" @focus="iconOn"></i>
+                        <i class="fas fa-paper-plane" @click="sendMessage" v-else></i>
+                    </div>
                 </div>
 
             </div>
 
+        </div>
+
+        <!-- DARKMODE ACTIVATION -->
+        <div class="dark-button" :class="{dark: darkmode}" @click="darkmodeSwitch">
+            <i v-if="darkmode" class="fas fa-sun"></i>
+            <i v-else class="fas fa-moon"></i>
         </div>
 
     </div>
